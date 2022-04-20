@@ -14,47 +14,42 @@ import hutil.stringformat._
 object ConnectingToADatabase extends App {
 
   import cats.effect.unsafe.implicits.global
+  import book.transactor._
 
   dash80.green.println()
 
-  val xa = Transactor.fromDriverManager[IO](
-    "org.postgresql.Driver", // driver classname
-    "jdbc:postgresql:world", // connect URL (driver-specific)
-    "postgres",              // user
-    ""                       // password
-  )
-
+  // ---------- 1st Program ------------------------------
   s"$dash10 Our First Program $dash10".magenta.println()
 
-  val program1 = 42.pure[ConnectionIO]
+  val program1: ConnectionIO[Int] = 42.pure[ConnectionIO]
   // program1: ConnectionIO[Int] = Pure(42)
 
-  val io1 = program1.transact(xa)
-  // io: IO[Int] = Async(
-  //   cats.effect.internals.IOBracket$$$Lambda$8180/248688506@6db044f4,
-  //   false
+  val io1: IO[Int] = program1.transact(xa)
+  // io1: IO[Int] = Uncancelable(
+  //   body = cats.effect.IO$$$Lambda$12397/0x000000084304d840@2c65f453,
+  //   event = cats.effect.tracing.TracingEvent$StackTrace
   // )
   io1.unsafeRunSync() pipe println
   // res0: Int = 42
 
+  // ---------- 2nd Program ------------------------------
   s"$dash10 Our Second Program $dash10".magenta.println()
 
-  val program2 = sql"select 42".query[Int].unique
+  val program2: ConnectionIO[Int] = sql"select 42".query[Int].unique
   // program2: ConnectionIO[Int] = Suspend(
-  //   BracketCase(
-  //     Suspend(PrepareStatement("select 42")),
-  //     doobie.hi.connection$$$Lambda$8172/902966097@4b8e53c9,
-  //     cats.effect.Bracket$$Lambda$8174/1752249240@7f379812
+  //   a = Uncancelable(
+  //     body = cats.effect.kernel.MonadCancel$$Lambda$12438/0x0000000843082840@4c3198ad
   //   )
   // )
-  val io2      = program2.transact(xa)
-  // io2: IO[Int] = Async(
-  //   cats.effect.internals.IOBracket$$$Lambda$8180/248688506@713156d6,
-  //   false
+  val io2: IO[Int]                = program2.transact(xa)
+  // io2: IO[Int] = Uncancelable(
+  //   body = cats.effect.IO$$$Lambda$12397/0x000000084304d840@c88f399,
+  //   event = cats.effect.tracing.TracingEvent$StackTrace
   // )
   io2.unsafeRunSync() pipe println
   // res1: Int = 42
 
+  // ---------- 3rd (monadic) Program ------------------------------
   s"$dash10 Our Third Program (monadic) $dash10".magenta.println()
 
   val program3: ConnectionIO[(Int, Double)] =
@@ -66,11 +61,12 @@ object ConnectingToADatabase extends App {
   program3.transact(xa).unsafeRunSync() pipe println
   // res2: (Int, Double) = (42, 0.011002501472830772)
 
+  // ---------- 3rd a (applicative) Program ------------------------------
   s"$dash10 Our Program 3a (applicative) $dash10".magenta.println()
 
   import cats.syntax.apply._
 
-  val program3a = {
+  val program3a: ConnectionIO[(Int, Double)] = {
     val a: ConnectionIO[Int]    = sql"select 42".query[Int].unique
     val b: ConnectionIO[Double] = sql"select random()".query[Double].unique
     (a, b).tupled
@@ -79,29 +75,34 @@ object ConnectingToADatabase extends App {
   program3a.transact(xa).unsafeRunSync() pipe println
   // res3: (Int, Double) = (42, 0.7195786754600704)
 
+  // ---------- 3rd a (applicative) Program ------------------------------
   s"$dash10 Our Program 3b (compose more) $dash10".magenta.println()
 
-  val valuesList = program3a.replicateA(5)
+  val valuesList: ConnectionIO[List[(Int, Double)]] = program3a.replicateA(5)
   // valuesList: ConnectionIO[List[(Int, Double)]] = FlatMapped(
-  //   FlatMapped(
-  //     FlatMapped(
-  //       Suspend(
-  //         BracketCase(
-  //           Suspend(PrepareStatement("select 42")),
-  //           doobie.hi.connection$$$Lambda$8172/902966097@5dd987f7,
-  //           cats.effect.Bracket$$Lambda$8174/1752249240@1e6d7356
-  //         )
+  //   c = FlatMapped(
+  //     c = FlatMapped(
+  //       c = FlatMapped(
+  //         c = FlatMapped(
+  //           c = Suspend(
+  //             a = Uncancelable(
+  //               body = cats.effect.kernel.MonadCancel$$Lambda$12438/0x0000000843082840@243f864f
+  //             )
+  //           ),
+  //           f = cats.FlatMap$$Lambda$12508/0x00000008430dc040@7b73a984
+  //         ),
+  //         f = cats.Monad$$Lambda$12386/0x0000000843034840@7ac20abb
   //       ),
-  //       cats.FlatMap$$Lambda$8597/1341541765@651111ab
+  //       f = cats.FlatMap$$Lambda$12561/0x000000084311a040@619a94d0
   //     ),
-  //     cats.Monad$$Lambda$8144/773217938@584306a
+  //     f = cats.Monad$$Lambda$12386/0x0000000843034840@39cf7b52
   //   ),
-  //   cats.FlatMap$$Lambda$8343/722281023@14f3f912
+  //   f = cats.Monad$$Lambda$12386/0x0000000843034840@5f96da66
   // )
-  val result     = valuesList.transact(xa)
-  // result: IO[List[(Int, Double)]] = Async(
-  //   cats.effect.internals.IOBracket$$$Lambda$8180/248688506@6171cf19,
-  //   false
+  val result: IO[List[(Int, Double)]]               = valuesList.transact(xa)
+  // result: IO[List[(Int, Double)]] = Uncancelable(
+  //   body = cats.effect.IO$$$Lambda$12397/0x000000084304d840@2b19e3eb,
+  //   event = cats.effect.tracing.TracingEvent$StackTrace
   // )
   result.unsafeRunSync().foreach(println)
   // (42,0.19134460762143135)
@@ -148,7 +149,7 @@ object ConnectingToADatabase extends App {
   //   .unique
   //   .transact(mxa)
   //   .runSyncUnsafe()
+  //   .pipe(println)
 
   dash80.green.println()
-  //   .pipe(println)
 }
