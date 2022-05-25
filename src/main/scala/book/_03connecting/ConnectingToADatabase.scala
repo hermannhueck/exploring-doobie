@@ -75,7 +75,7 @@ object ConnectingToADatabase extends App {
   program3a.transact(xa).unsafeRunSync() pipe println
   // res3: (Int, Double) = (42, 0.7195786754600704)
 
-  // ---------- 3rd a (applicative) Program ------------------------------
+  // ---------- 3rd b (applicative) Program ------------------------------
   s"$dash10 Our Program 3b (compose more) $dash10".magenta.println()
 
   val valuesList: ConnectionIO[List[(Int, Double)]] = program3a.replicateA(5)
