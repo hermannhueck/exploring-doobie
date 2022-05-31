@@ -50,4 +50,6 @@ object TypeCheckingQueries extends App {
   s"$dash10 Working Around Bad Metadata (using checkOutput) $dash10".magenta.println()
 
   biggerThan2(0).checkOutput.unsafeRunSync()
+
+  dash80.green.println()
 }
