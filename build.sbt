@@ -42,10 +42,13 @@ lazy val root = (project in file("."))
       doobiePostgres,
       doobieHikari,
       newtype,
-      munit,
+      circeCore,
+      circeParser,
       kindProjectorPlugin,
       betterMonadicForPlugin
     ) ++ Seq(
-      scalaCheck
-    ).map(_ % Test)
+      doobieSpecs2,
+      doobieScalatest,
+      doobieMunit
+    ) // .map(_ % Test)
   )

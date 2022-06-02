@@ -7,10 +7,12 @@ object Versions {
   val scala2Version = "2.13.8"
 
   // 3rd party libraries
-  val doobieVersion     = "1.0.0-RC2"
-  val newTypeVersion    = "0.4.4"
-  val munitVersion      = "0.7.29"
-  val scalaCheckVersion = "1.16.0"
+  val doobieVersion  = "1.0.0-RC2"
+  val newTypeVersion = "0.4.4"
+  val circeVersion   = "0.14.2"
+  // val munitVersion      = "0.7.29"
+  // val scalaTestVersion  = "3.2.12"
+  // val scalaCheckVersion = "1.16.0"
 
   // compiler plugins
   val kindProjectorVersion    = "0.13.2"
