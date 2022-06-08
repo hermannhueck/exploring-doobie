@@ -13,6 +13,8 @@ object Versions {
   // val munitVersion      = "0.7.29"
   // val scalaTestVersion  = "3.2.12"
   // val scalaCheckVersion = "1.16.0"
+  val slf4jVersion   = "1.7.36"
+  val postgisVersion = "2.3.0"
 
   // compiler plugins
   val kindProjectorVersion    = "0.13.2"

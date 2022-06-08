@@ -40,10 +40,14 @@ lazy val root = (project in file("."))
       doobieCore,
       doobieH2,
       doobiePostgres,
+      doobiePostgresCirce,
       doobieHikari,
       newtype,
       circeCore,
       circeParser,
+      slf4jApi,
+      slf4jSimple,
+      postgis,
       kindProjectorPlugin,
       betterMonadicForPlugin
     ) ++ Seq(

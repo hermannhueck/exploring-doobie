@@ -6,7 +6,6 @@ package book._14managingconnections
 import hutil.stringformat._
 
 import cats.effect.{ExitCode, IO, IOApp, Resource}
-// import cats.effect.{ExitCode, IO, IOApp}
 
 import doobie._
 import doobie.hikari._
@@ -16,7 +15,7 @@ object HikariApp extends IOApp {
 
   // Resource yielding a transactor configured with a bounded connect EC and an unbounded
   // transaction EC. Everything will be closed and shut down cleanly after use.
-  val transactor: Resource[IO, HikariTransactor[IO]] =
+  val hikariTransactor: Resource[IO, HikariTransactor[IO]] =
     for {
       ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
       // be <- Blocker[IO]                               // our blocking EC (needed for CE2)
@@ -31,12 +30,12 @@ object HikariApp extends IOApp {
     } yield xa
 
   def run(args: List[String]): IO[ExitCode] =
-    transactor.use { xa =>
+    hikariTransactor.use { xa =>
       // Construct and run your server here!
       for {
         _ <- IO.println(dash80.green)
         n <- sql"select 42".query[Int].unique.transact(xa)
-        _ <- IO(println(n))
+        _ <- IO.println(n)
         _ <- IO.println(dash80.green)
       } yield ExitCode.Success
     }

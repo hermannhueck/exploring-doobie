@@ -49,14 +49,14 @@ object ManagingConnections extends App {
     // transaction EC. Everything will be closed and shut down cleanly after use.
     val transactor: Resource[IO, HikariTransactor[IO]] =
       for {
-        ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
+        ec <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
         // be <- Blocker[IO]                               // our blocking EC
         xa <- HikariTransactor.newHikariTransactor[IO](
                 "org.h2.Driver",                      // driver classname
                 "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", // connect URL
                 "sa",                                 // username
                 "",                                   // password
-                ce                                    // await connection here
+                ec                                    // await connection here
                 // be                                    // execute JDBC operations here
               )
       } yield xa
@@ -73,9 +73,9 @@ object ManagingConnections extends App {
     // Resource yielding a DataSourceTransactor[IO] wrapping the given `DataSource`
     def transactor(ds: DataSource): Resource[IO, DataSourceTransactor[IO]] =
       for {
-        ce <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
+        ec <- ExecutionContexts.fixedThreadPool[IO](32) // our connect EC
         // be <- Blocker[IO]                               // our blocking EC
-      } yield Transactor.fromDataSource[IO](ds, ce)
+      } yield Transactor.fromDataSource[IO](ds, ec)
   }
 
   s"$dash10 Using an Existing JDBC Connection $dash10".magenta.println()
