@@ -3,6 +3,8 @@
 //
 package book._14managingconnections
 
+import hutil.stringformat._
+
 import cats.effect.{ExitCode, IO, IOApp, Resource}
 // import cats.effect.{ExitCode, IO, IOApp}
 
@@ -35,6 +37,7 @@ object HikariApp extends IOApp {
         _ <- IO.println(dash80.green)
         n <- sql"select 42".query[Int].unique.transact(xa)
         _ <- IO(println(n))
+        _ <- IO.println(dash80.green)
       } yield ExitCode.Success
     }
 }
