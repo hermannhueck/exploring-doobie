@@ -5,16 +5,12 @@ package book._17faq
 
 import hutil.stringformat._
 
-import cats._
 import cats.data._
 import cats.effect._
-import cats.effect.implicits._
+
 import cats.implicits._
 import doobie._
 import doobie.implicits._
-import doobie.util.ExecutionContexts
-import java.awt.geom.Point2D
-import java.util.UUID
 import shapeless._
 
 object FaqApp extends App {
@@ -244,7 +240,7 @@ object FaqApp extends App {
       )
   """.stripMargin.println()
 
-  import doobie.enum.JdbcType.Other
+  import doobie.enumerated.JdbcType
   import java.sql.SQLXML
   import scala.xml.{Elem, XML}
 
@@ -252,7 +248,7 @@ object FaqApp extends App {
     Meta
       .Advanced
       .one[Elem](
-        Other,
+        JdbcType.Other,
         NonEmptyList.of("xml"),
         (rs, n) => XML.load(rs.getObject(n).asInstanceOf[SQLXML].getBinaryStream),
         (ps, n, e) => {
