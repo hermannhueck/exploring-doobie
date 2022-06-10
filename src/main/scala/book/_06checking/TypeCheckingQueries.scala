@@ -3,9 +3,8 @@
 //
 package book._06checking
 
-import hutil.stringformat._
-
 import doobie.implicits._
+import hutil.stringformat._
 
 object TypeCheckingQueries extends App {
 

@@ -3,9 +3,8 @@
 //
 package book._13unittesting
 
-import hutil.stringformat._
-
 import doobie.implicits._
+import hutil.stringformat._
 
 object UnitTesting extends App {
 

@@ -3,10 +3,9 @@
 //
 package book._11arrays
 
-import hutil.stringformat._
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object SQLArrays extends App {
 

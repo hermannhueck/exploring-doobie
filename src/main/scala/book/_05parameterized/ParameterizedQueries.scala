@@ -3,12 +3,10 @@
 //
 package book._05parameterized
 
-import hutil.stringformat._
-
 import cats.data.NonEmptyList
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object ParameterizedQueries extends App {
 

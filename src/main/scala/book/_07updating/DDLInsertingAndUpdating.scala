@@ -5,13 +5,11 @@ package book._07updating
 
 import scala.util.chaining._
 
-import hutil.stringformat._
-
 import cats.instances.list._
 import cats.syntax.apply._
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object DDLInsertingAndUpdating extends App {
 

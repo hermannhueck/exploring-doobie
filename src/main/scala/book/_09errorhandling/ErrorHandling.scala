@@ -5,13 +5,11 @@ package book._09errorhandling
 
 import scala.util.chaining._
 
-import hutil.stringformat._
-
 import cats.syntax.applicative._
 import cats.syntax.applicativeError._
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object ErrorHandling extends App {
 

@@ -3,15 +3,12 @@
 //
 package book._12custommappings
 
-import hutil.stringformat._
-
 import cats.Show
 import cats.data.NonEmptyList
-import cats.syntax.show._
 import cats.syntax.either._
-
+import cats.syntax.show._
 import doobie._
-
+import hutil.stringformat._
 import io.circe._
 import io.circe.jawn._
 import org.postgresql.util.PGobject

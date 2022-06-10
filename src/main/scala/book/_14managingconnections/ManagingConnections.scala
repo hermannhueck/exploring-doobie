@@ -3,12 +3,9 @@
 //
 package book._14managingconnections
 
-import hutil.stringformat._
-
 import cats.effect.{IO, Resource}
-// import cats.effect.unsafe.implicits.global
-
 import doobie._
+import hutil.stringformat._
 
 object ManagingConnections extends App {
 

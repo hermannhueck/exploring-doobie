@@ -5,10 +5,9 @@ package book._08fragments
 
 import scala.util.chaining._
 
-import hutil.stringformat._
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object StatementFragments extends App {
 

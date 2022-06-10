@@ -5,13 +5,11 @@ package book._15extensionspostgresql
 
 import scala.util.chaining._
 
-import hutil.stringformat._
-
 import doobie._
 import doobie.implicits._
-
 import doobie.postgres._
 import doobie.postgres.implicits._
+import hutil.stringformat._
 
 object ExtensionsForPostgreSQL extends App {
 

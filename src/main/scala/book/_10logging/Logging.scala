@@ -3,10 +3,9 @@
 //
 package book._10logging
 
-import hutil.stringformat._
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object Logging extends App {
 

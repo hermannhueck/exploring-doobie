@@ -3,14 +3,12 @@
 //
 package book._17faq
 
-import hutil.stringformat._
-
 import cats.data._
 import cats.effect._
-
 import cats.implicits._
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 import shapeless._
 
 object FaqApp extends App {

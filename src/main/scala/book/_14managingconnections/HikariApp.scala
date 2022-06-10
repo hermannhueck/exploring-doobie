@@ -3,13 +3,11 @@
 //
 package book._14managingconnections
 
-import hutil.stringformat._
-
 import cats.effect.{ExitCode, IO, IOApp, Resource}
-
 import doobie._
 import doobie.hikari._
 import doobie.implicits._
+import hutil.stringformat._
 
 object HikariApp extends IOApp {
 

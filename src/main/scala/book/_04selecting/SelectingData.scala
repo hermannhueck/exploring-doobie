@@ -3,12 +3,10 @@
 //
 package book._04selecting
 
-import hutil.stringformat._
-
 import cats.effect.IO
-
 import doobie._
 import doobie.implicits._
+import hutil.stringformat._
 
 object SelectingData extends App {
 

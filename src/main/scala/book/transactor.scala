@@ -1,7 +1,7 @@
 package book
 
-import doobie.util.transactor.Transactor
 import cats.effect.IO
+import doobie.util.transactor.Transactor
 
 object transactor {
 

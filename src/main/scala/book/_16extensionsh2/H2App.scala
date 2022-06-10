@@ -3,13 +3,11 @@
 //
 package book._16extensionsh2
 
-import hutil.stringformat._
-
 import cats.effect.{ExitCode, IO, IOApp, Resource}
-
 import doobie._
 import doobie.h2._
 import doobie.implicits._
+import hutil.stringformat._
 
 object H2App extends IOApp {
 
