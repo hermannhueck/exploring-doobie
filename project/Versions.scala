@@ -4,16 +4,16 @@ object Versions {
   val projectVersion = "0.1.0"
 
   // Scala
-  val scala2Version = "2.13.8"
+  val scala2Version = "2.13.10"
 
   // 3rd party libraries
   val doobieVersion  = "1.0.0-RC2"
   val newTypeVersion = "0.4.4"
-  val circeVersion   = "0.14.2"
+  val circeVersion   = "0.14.3"
   // val munitVersion      = "0.7.29"
   // val scalaTestVersion  = "3.2.12"
   // val scalaCheckVersion = "1.16.0"
-  val slf4jVersion   = "1.7.36"
+  val slf4jVersion   = "2.0.3"
   val postgisVersion = "2021.1.0"
 
   // compiler plugins
